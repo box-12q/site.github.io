@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:margin-left="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Юрист ФИО | Премиальный сервис</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #121B26;
+            --gold: #C5A059;
+            --bg-light: #FDFDFD;
+            --white: #ffffff;
+            --radius-lg: 40px;
+            --radius-md: 24px;
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-light);
+            color: var(--primary);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 20px; }
+
+        /* HEADER */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            height: 80px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        nav { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .logo { font-size: 1.4rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .logo i { color: var(--gold); }
+
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { font-weight: 500; font-size: 0.9rem; color: var(--primary); text-decoration: none; transition: 0.3s; }
+        .nav-links a:hover { color: var(--gold); }
+
+        /* HERO */
+        .hero {
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(circle at top right, #f0f4f8, #ffffff);
+            border-bottom-left-radius: var(--radius-lg);
+            border-bottom-right-radius: var(--radius-lg);
+            margin-bottom: 40px;
+        }
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 20px; }
+        .btn {
+            padding: 18px 40px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .btn:hover { background: var(--gold); transform: scale(1.05); }
+
+        /* SECTION COMMON */
+        section { padding: 120px 0; }
+        h2 { font-size: 2.8rem; text-align: center; margin-bottom: 60px; }
+
+        /* ABOUT */
+        .about-card {
+            background: var(--white);
+            padding: 50px;
+            border-radius: var(--radius-lg);
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 60px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+            align-items: center;
+        }
+        .about-img { width: 100%; border-radius: var(--radius-md); filter: grayscale(0.2); }
+
+        /* ЦИКЛИЧНЫЙ СЛАЙДЕР С ФОКУСОМ */
+        .slider-wrapper {
+            position: relative;
+            overflow: hidden;
+            padding: 40px 0;
+        }
+
+        .slider-track {
+            display: flex;
+            align-items: center;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: grab;
+            padding: 20px 0;
+        }
+
+        .card {
+            flex: 0 0 380px; /* Базовая ширина */
+            margin: 0 20px;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            opacity: 0.5;
+            transform: scale(0.8); /* Боковые карточки меньше */
+            display: flex;
+            flex-direction: column;
+            border: 1px solid transparent;
+        }
+
+        /* Активная карточка в центре */
+        .card.active {
+            opacity: 1;
+            transform: scale(1.1); /* Центр больше */
+            border-color: var(--gold);
+            box-shadow: 0 25px 50px rgba(197, 160, 89, 0.15);
+            z-index: 10;
+        }
+
+        .price-val { font-size: 2.2rem; color: var(--gold); font-weight: 700; margin: 20px 0; }
+
+        /* КНОПКА НАВЕРХ */
+        #toTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--gold);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 2000;
+            display: none;
+            box-shadow: 0 10px 20px rgba(197,160,89,0.3);
+            transition: 0.3s;
+        }
+
+        /* КОНТАКТЫ */
+        .contacts { background: var(--primary); color: var(--white); border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+        .contacts h2 { color: var(--white); }
+        .contact-grid { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; text-align: center; }
+        .contact-item a { font-size: 1.5rem; color: var(--gold); display: block; margin-top: 10px; }
+
+        /* МОБИЛЬНАЯ ВЕРСИЯ */
+        @media (max-width: 768px) {
+            .about-card { grid-template-columns: 1fr; padding: 30px; }
+            .nav-links { display: none; }
+            .card { flex: 0 0 280px; }
+            header { position: sticky; } /* Всегда сверху */
+        }
+    </style>
+</head>
+<body>
+
+    <button id="toTop"><i class="fas fa-arrow-up"></i></button>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><i class="fas fa-shield-halved"></i> ФИО</div>
+                <ul class="nav-links">
+                    <li><a href="#about">Обо мне</a></li>
+                    <li><a href="#prices">Прайс</a></li>
+                    <li><a href="#cases">Кейсы</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                </ul>
+                <div class="btn" style="padding: 10px 25px; font-size: 0.8rem; margin-left: 20px;"><img src="img/menu-50.png" width="25" height="25"></div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container" data-aos="zoom-in">
+            <h1>Безупречная репутация.<br>Защита ваших интересов.</h1>
+            <p>Юрист высшей категории с опытом работы более 15 лет.</p><br>
+            <a href="#contact" class="btn">Бесплатная консультация</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container" data-aos="fade-up">
+            <h2>Опыт и Образование</h2>
+            <div class="about-card">
+                <img src="https://dvemorkovki.ru/catalog/novyy_god/vyrubki_dlya_pryanikov_skalki/10467/" class="about-img" alt="Юрист">
+                <div>
+                    <h3>ФИО</h3>
+                    <p style="margin: 20px 0; color: #666;">речь о себе </p>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 15px;"><i class="fas fa-check-circle" style="color: var(--gold);"></i> МГУ им. Ломоносова (Красный диплом)</li>
+                        <li style="margin-bottom: 15px;"><i class="fas fa-check-circle" style="color: var(--gold);"></i> 15 лет юридической практики</li>
+                        <li style="margin-bottom: 15px;"><i class="fas fa-check-circle" style="color: var(--gold);"></i> Член коллегии адвокатов</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="prices" style="background: #f4f7f9; border-radius: var(--radius-lg);">
+        <div class="container" data-aos="fade-up">
+            <h2>Стоимость услуг</h2>
+            <div class="slider-wrapper">
+                <div class="slider-track" id="priceTrack">
+                    <div class="card">
+                        <h3>Консультация</h3>
+                        <div class="price-val">5 000 ₽</div>
+                        <p>Полный анализ документов и выработка стратегии защиты.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Суд (Арбитраж)</h3>
+                        <div class="price-val">70 000 ₽</div>
+                        <p>Представительство ваших интересов во всех инстанциях.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Договоры</h3>
+                        <div class="price-val">15 000 ₽</div>
+                        <p>Разработка уникальных соглашений под ваши бизнес-процессы.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Семейные споры</h3>
+                        <div class="price-val">40 000 ₽</div>
+                        <p>Раздел имущества и определение места жительства детей.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cases">
+        <div class="container" data-aos="fade-up">
+            <h2>Успешные дела</h2>
+            <div class="slider-wrapper">
+                <div class="slider-track" id="casesTrack">
+                    <div class="card">
+                        <i class="fas fa-landmark" style="font-size: 2rem; color: var(--gold); margin-bottom: 20px;"></i>
+                        <h3>Возврат активов</h3>
+                        <p>Вернули клиенту коммерческую недвижимость стоимостью 120 млн руб.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-briefcase" style="font-size: 2rem; color: var(--gold); margin-bottom: 20px;"></i>
+                        <h3>Корпоративный спор</h3>
+                        <p>Предотвратили враждебное поглощение производственного предприятия.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-users-slash" style="font-size: 2rem; color: var(--gold); margin-bottom: 20px;"></i>
+                        <h3>Наследство</h3>
+                        <p>Доказали права наследников первой очереди в сложном споре с банком.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-car-crash" style="font-size: 2rem; color: var(--gold); margin-bottom: 20px;"></i>
+                        <h3>Страховой случай</h3>
+                        <p>Взыскали со страховой компании выплату в 3 раза больше первоначальной.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contacts">
+        <div class="container" data-aos="fade-up">
+            <h2>Оставить заявку</h2>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <p>Почта</p>
+                    <a href="mailto:lawyer@volkov.ru">aaaaa@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <p>Телефон</p>
+                    <a href="tel:+79991234567">+7 (999) 123-45-67</a>
+                </div>
+                <div class="contact-item">
+                    <p>Telegram</p>
+                    <a href="https://t.me/volkov">@12234</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Анимация AOS: добавляем mirror:true чтобы всплывало каждый раз
+        AOS.init({ duration: 1000, once: false, mirror: true });
+
+        // Кнопка наверх
+        const toTop = document.getElementById('toTop');
+        window.onscroll = () => {
+            toTop.style.display = window.scrollY > 500 ? 'block' : 'none';
+        };
+        toTop.onclick = () => window.scrollTo({top: 0, behavior: 'smooth'});
+
+        // ФУНКЦИЯ ДЛЯ БЕСКОНЕЧНОГО СЛАЙДЕРА С ФОКУСОМ
+        function initInfiniteSlider(trackId) {
+            const track = document.getElementById(trackId);
+            const cards = Array.from(track.children);
+
+            // Клонируем элементы для создания эффекта бесконечности
+            cards.forEach(card => {
+                const clone = card.cloneNode(true);
+                track.appendChild(clone);
+            });
+            cards.forEach(card => {
+                const clone = card.cloneNode(true);
+                track.prepend(clone);
+            });
+
+            let isDragging = false;
+            let startX, scrollLeft;
+
+            const updateFocus = () => {
+                const trackRect = track.parentElement.getBoundingClientRect();
+                const trackCenter = trackRect.left + trackRect.width / 2;
+
+                Array.from(track.children).forEach(child => {
+                    const childRect = child.getBoundingClientRect();
+                    const childCenter = childRect.left + childRect.width / 2;
+                    const distanceFromCenter = Math.abs(trackCenter - childCenter);
+
+                    if (distanceFromCenter < 150) {
+                        child.classList.add('active');
+                    } else {
+                        child.classList.remove('active');
+                    }
+                });
+            };
+
+            // Зацикливание прокрутки
+            track.parentElement.addEventListener('scroll', () => {
+                const s = track.parentElement;
+                if (s.scrollLeft <= 0) {
+                    s.scrollLeft = s.scrollWidth / 3;
+                } else if (s.scrollLeft >= (s.scrollWidth * 2/3)) {
+                    s.scrollLeft = s.scrollWidth / 3;
+                }
+                updateFocus();
+            });
+
+            // Настройка стилей обертки для скролла
+            track.parentElement.style.overflowX = 'scroll';
+            track.parentElement.style.scrollbarWidth = 'none';
+
+            // Начальная позиция - в середину (на оригинальные карточки)
+            setTimeout(() => {
+                track.parentElement.scrollLeft = track.parentElement.scrollWidth / 3;
+                updateFocus();
+            }, 100);
+
+            // Обработка фокуса при обычном скролле
+            track.parentElement.addEventListener('scroll', updateFocus);
+        }
+
+        // Запуск слайдеров
+        initInfiniteSlider('priceTrack');
+        initInfiniteSlider('casesTrack');
+    </script>
+</body>
+</html>
+
+
