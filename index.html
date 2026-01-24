@@ -2,9 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Юрист ФИО | Премиальный сервис</title>
-
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,324 +11,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-
-    <style>
-        /* --- CSS ПЕРЕМЕННЫЕ --- */
-        :root {
-            --primary: #121B26;
-            --gold: #C5A059;
-            --bg-light: #FDFDFD;
-            --white: #ffffff;
-            --radius-lg: 40px;
-            --radius-md: 24px;
-            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            --header-height: 80px;
-        }
-
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: var(--header-height);
-        }
-
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: var(--bg-light);
-            color: var(--primary);
-            overflow-x: hidden; /* Важно: убирает горизонтальную прокрутку */
-            width: 100%;
-        }
-
-
-        h1, h2, h3 { font-family: 'Playfair Display', serif; }
-
-
-        .container {
-            max-width: 1300px;
-            width: 100%; /* Гарантирует, что контейнер не будет шире экрана */
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-
-        /* --- ШАПКА --- */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.95); /* Чуть плотнее фон для читаемости */
-            backdrop-filter: blur(15px);
-            height: var(--header-height);
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-
-
-        nav { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .logo i { color: var(--gold); }
-
-
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a {
-            font-weight: 500;
-            font-size: 0.9rem;
-            color: var(--primary);
-            text-decoration: none;
-            transition: 0.3s;
-            position: relative;
-        }
-        .nav-links a::after {
-            content: ''; position: absolute; width: 0; height: 2px;
-            bottom: -5px; left: 0; background-color: var(--gold); transition: 0.3s;
-        }
-        .nav-links a:hover::after { width: 100%; }
-
-
-        /* Бургер-меню: скрыто на ПК */
-        .menu-toggle {
-            display: none;
-            background: var(--primary);
-            padding: 10px;
-            border-radius: 12px;
-            cursor: pointer;
-            color: white;
-            border: none;
-        }
-
-
-        /* --- HERO --- */
-        .hero {
-            min-height: 90vh; /* min-height лучше чем height для мобильных с адрессной строкой */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: radial-gradient(circle at top right, #f0f4f8, #ffffff);
-            border-bottom-left-radius: var(--radius-lg);
-            border-bottom-right-radius: var(--radius-lg);
-            margin-bottom: 40px;
-            padding: 100px 0; /* Доп отступ чтобы контент не прилипал */
-        }
-        .hero h1 { font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 20px; line-height: 1.2; }
-
-        .btn {
-            padding: 18px 40px;
-            background: var(--primary);
-            color: var(--white);
-            border-radius: 50px;
-            text-decoration: none;
-            display: inline-block;
-            font-weight: 600;
-            transition: var(--transition);
-            cursor: pointer;
-            border: none;
-        }
-        .btn:hover { background: var(--gold); transform: scale(1.05); }
-
-
-        section { padding: 80px 0; }
-        h2 { font-size: clamp(2rem, 4vw, 2.8rem); text-align: center; margin-bottom: 60px; }
-
-
-        /* --- ОБО МНЕ (СЕТКА) --- */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 50px;
-            align-items: start;
-        }
-
-
-        .about-img {
-            width: 100%;
-            height: 500px;
-            object-fit: cover;
-            border-radius: 4px;
-            box-shadow: 20px 20px 0 var(--primary);
-        }
-
-
-        .timeline-item {
-            border-left: 2px solid var(--gold);
-            padding-left: 20px;
-            margin-bottom: 30px;
-            position: relative;
-        }
-        .timeline-item::before {
-            content: ''; position: absolute; left: -6px; top: 5px;
-            width: 10px; height: 10px; background: var(--primary); border-radius: 50%;
-        }
-        .timeline-year { font-weight: 700; color: var(--gold); font-size: 0.9rem; margin-bottom: 5px; }
-
-
-        /* --- СЛАЙДЕРЫ --- */
-        .slider-container-relative {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-
-        .nav-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px; height: 50px;
-            background: var(--white);
-            border: 1px solid #eee;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 20; transition: 0.3s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .nav-arrow:hover { background: var(--gold); color: white; border-color: var(--gold); }
-        .arrow-left { left: -25px; }
-        .arrow-right { right: -25px; }
-
-
-        .slider-wrapper {
-            width: 100%;
-            overflow-x: scroll;
-            scroll-snap-type: x mandatory;
-            scrollbar-width: none;
-            padding: 40px 0;
-            -ms-overflow-style: none;
-        }
-        .slider-wrapper::-webkit-scrollbar { display: none; }
-
-
-        .slider-track {
-            display: flex;
-            width: max-content;
-            padding: 0 calc(50% - 190px); /* Центрирование для ПК */
-        }
-
-
-        .card {
-            flex: 0 0 380px;
-            margin: 0 20px;
-            background: var(--white);
-            border-radius: var(--radius-md);
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: var(--transition);
-            opacity: 0.4;
-            transform: scale(0.85);
-            scroll-snap-align: center;
-            border: 1px solid transparent;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-        }
-        .service-desc { font-size: 0.95rem; line-height: 1.6; color: #555; margin-top: 10px; min-height: 80px; }
-        .card.active { opacity: 1; transform: scale(1.1); border-color: var(--gold); box-shadow: 0 25px 50px rgba(197, 160, 89, 0.15); z-index: 10; }
-        .price-val { font-size: 2.2rem; color: var(--gold); font-weight: 700; margin: 15px 0; }
-
-
-        /* --- КОНТАКТЫ --- */
-        .contacts { background: var(--primary); color: var(--white); border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
-        .contacts h2 { color: var(--white); }
-        .contact-grid { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; text-align: center; }
-        .contact-item a { font-size: 1.5rem; color: var(--gold); display: block; margin-top: 10px; text-decoration: none;}
-
-
-        #toTop {
-            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
-            background: var(--gold); color: white; border: none; border-radius: 50%;
-            cursor: pointer; z-index: 2000; display: none;
-            box-shadow: 0 10px 20px rgba(197,160,89,0.3);
-        }
-
-
-        /* --- АДАПТИВНОСТЬ ---
-           Мы объединяем два условия:
-           1. Класс .mobile-device (добавляется JS если это сенсорный экран)
-           2. @media (max-width: 1024px) (срабатывает если экран узкий)
-           Это ГАРАНТИРУЕТ мобильный вид на телефоне, даже если JS не сработает.
-        */
-        body.mobile-device .nav-links,
-        @media (max-width: 1024px) {
-            /* Перестройка меню в мобильное */
-            .nav-links {
-                display: none; /* Скрыто по умолчанию */
-                position: absolute;
-                top: 80px;
-                left: 0;
-                width: 100%;
-                background: white;
-                flex-direction: column;
-                padding: 30px;
-                text-align: center;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-                max-height: 80vh;
-                overflow-y: auto;
-            }
-            /* Класс show добавляется JS-ом при клике на бургер */
-            .nav-links.show { display: flex; }
-
-            /* Показываем кнопку бургера */
-            .menu-toggle { display: block; }
-
-            /* Перестройка блока Обо мне в одну колонку */
-            .about-grid { grid-template-columns: 1fr; }
-            .about-img { height: 350px; margin-bottom: 30px; box-shadow: none; }
-
-            /* Адаптация слайдера под узкий экран */
-            .slider-track { padding: 0 calc(50% - 140px); } /* 280/2 = 140 */
-            .card { flex: 0 0 280px; padding: 25px; }
-            .price-val { font-size: 1.8rem; }
-
-            /* Скрываем стрелки, так как есть свайп пальцем */
-            .nav-arrow { display: none !important; }
-            .arrow-left, .arrow-right { display: none !important; }
-        }
-
-
-        /* Только для ПК (широкий экран + мышь) */
-        @media (min-width: 1025px) {
-            .arrow-left, .arrow-right { display: flex; }
-        }
-
-
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-
     <button id="toTop"><i class="fas fa-arrow-up"></i></button>
 
-
     <header>
-        <div class="container">
+        <div class="container header-content">
+            <div class="logo"><i class="fas fa-shield-halved"></i> ФИО</div>
+
             <nav>
-                <div class="logo"><i class="fas fa-shield-halved"></i> ФИО</div>
-                <ul class="nav-links" id="navMenu">
-                    <li><a href="#about" onclick="closeMenu()">Обо мне</a></li>
-                    <li><a href="#prices" onclick="closeMenu()">Прайс</a></li>
-                    <li><a href="#cases" onclick="closeMenu()">Кейсы</a></li>
-                    <li><a href="#contact" onclick="closeMenu()">Контакты</a></li>
+                <ul class="nav-links">
+                    <li><a href="#about">Обо мне</a></li>
+                    <li><a href="#prices">Прайс</a></li>
+                    <li><a href="#cases">Кейсы</a></li>
+                    <li><a href="#contact">Контакты</a></li>
                 </ul>
-                <button class="menu-toggle" onclick="toggleMenu()">
-                    <i class="fas fa-bars fa-lg"></i>
-                </button>
             </nav>
         </div>
     </header>
-
 
     <section class="hero">
         <div class="container" data-aos="zoom-in">
@@ -338,7 +39,6 @@
             <a href="#contact" class="btn">Бесплатная консультация</a>
         </div>
     </section>
-
 
     <section id="about">
         <div class="container">
@@ -374,214 +74,173 @@
         </div>
     </section>
 
-
     <section id="prices" style="background: #f4f7f9; border-radius: var(--radius-lg);">
         <div class="container" data-aos="fade-up">
             <h2>Стоимость услуг</h2>
-            <div class="slider-container-relative">
-                <div class="nav-arrow arrow-left" onclick="moveSlider('priceWrapper', -1)"><i class="fas fa-chevron-left"></i></div>
 
-                <div class="slider-wrapper" id="priceWrapper">
-                    <div class="slider-track" id="priceTrack">
-                        <div class="card">
-                            <h3>Консультация</h3>
-                            <div class="price-val">5 000 ₽</div>
-                            <p class="service-desc">Глубокий анализ вашей ситуации, изучение документов и разработка пошаговой правовой стратегии.</p>
-                        </div>
-                        <div class="card">
-                            <h3>Суд (Арбитраж)</h3>
-                            <div class="price-val">70 000 ₽</div>
-                            <p class="service-desc">Комплексное ведение дела "под ключ" во всех инстанциях, от подачи иска до получения решения.</p>
-                        </div>
-                        <div class="card">
-                            <h3>Договоры</h3>
-                            <div class="price-val">15 000 ₽</div>
-                            <p class="service-desc">Составление и экспертиза договоров любой сложности, минимизация рисков для вашего бизнеса.</p>
-                        </div>
-                        <div class="card">
-                            <h3>Семейные споры</h3>
-                            <div class="price-val">40 000 ₽</div>
-                            <p class="service-desc">Деликатное решение вопросов раздела имущества, алиментов и порядка общения с детьми.</p>
-                        </div>
+            <div class="slider-container-relative">
+                <button class="nav-btn prev" id="pricePrev"><i class="fas fa-chevron-left"></i></button>
+
+                <div class="slider-wrapper" id="priceTrack">
+                    <div class="card">
+                        <h3>Консультация</h3>
+                        <div class="price-val">5 000 ₽</div>
+                        <p>Полный анализ документов и выработка стратегии защиты.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Суд (Арбитраж)</h3>
+                        <div class="price-val">70 000 ₽</div>
+                        <p>Представительство ваших интересов во всех инстанциях.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Договоры</h3>
+                        <div class="price-val">15 000 ₽</div>
+                        <p>Разработка уникальных соглашений под ваши бизнес-процессы.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Семейные споры</h3>
+                        <div class="price-val">40 000 ₽</div>
+                        <p>Раздел имущества и определение места жительства детей.</p>
                     </div>
                 </div>
 
-                <div class="nav-arrow arrow-right" onclick="moveSlider('priceWrapper', 1)"><i class="fas fa-chevron-right"></i></div>
+                <button class="nav-btn next" id="priceNext"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
     </section>
-
 
     <section id="cases">
         <div class="container" data-aos="fade-up">
             <h2>Успешные дела</h2>
-            <div class="slider-container-relative">
-                <div class="nav-arrow arrow-left" onclick="moveSlider('casesWrapper', -1)"><i class="fas fa-chevron-left"></i></div>
 
-                <div class="slider-wrapper" id="casesWrapper">
-                    <div class="slider-track" id="casesTrack">
-                        <div class="card">
-                            <i class="fas fa-landmark fa-2x" style="color:var(--gold); margin-bottom:15px;"></i>
-                            <h3>Возврат активов</h3>
-                            <p class="service-desc">Успешно оспорили сделку и вернули клиенту коммерческую недвижимость стоимостью 120 млн руб.</p>
-                        </div>
-                        <div class="card">
-                            <i class="fas fa-briefcase fa-2x" style="color:var(--gold); margin-bottom:15px;"></i>
-                            <h3>Корпоративный спор</h3>
-                            <p class="service-desc">Защитили интересы мажоритарного акционера и предотвратили враждебное поглощение предприятия.</p>
-                        </div>
-                        <div class="card">
-                            <i class="fas fa-users-slash fa-2x" style="color:var(--gold); margin-bottom:15px;"></i>
-                            <h3>Наследство</h3>
-                            <p class="service-desc">Доказали права наследников первой очереди в сложном споре с банком, аннулировав долги наследодателя.</p>
-                        </div>
-                        <div class="card">
-                            <i class="fas fa-car-crash fa-2x" style="color:var(--gold); margin-bottom:15px;"></i>
-                            <h3>Страховой случай</h3>
-                            <p class="service-desc">Взыскали со страховой компании полную выплату, штраф и неустойку, увеличив сумму в 3 раза.</p>
-                        </div>
+            <div class="slider-container-relative">
+                <button class="nav-btn prev" id="casesPrev"><i class="fas fa-chevron-left"></i></button>
+
+                <div class="slider-wrapper" id="casesTrack">
+                    <div class="card">
+                        <i class="fas fa-landmark" style="font-size: 2rem; color: var(--gold); margin-bottom: 20px;"></i>
+                        <h3>Возврат активов</h3>
+                        <p>Вернули клиенту коммерческую недвижимость стоимостью 120 млн руб.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-briefcase" style="font-size: 2rem; color: var(--gold); margin-bottom: 20px;"></i>
+                        <h3>Корпоративный спор</h3>
+                        <p>Предотвратили враждебное поглощение производственного предприятия.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-users-slash" style="font-size: 2rem; color: var(--gold); margin-bottom: 20px;"></i>
+                        <h3>Наследство</h3>
+                        <p>Доказали права наследников первой очереди в сложном споре с банком.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-car-crash" style="font-size: 2rem; color: var(--gold); margin-bottom: 20px;"></i>
+                        <h3>Страховой случай</h3>
+                        <p>Взыскали со страховой компании выплату в 3 раза больше первоначальной.</p>
                     </div>
                 </div>
 
-                <div class="nav-arrow arrow-right" onclick="moveSlider('casesWrapper', 1)"><i class="fas fa-chevron-right"></i></div>
+                <button class="nav-btn next" id="casesNext"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
     </section>
-
 
     <section id="contact" class="contacts">
-        <div class="container">
-            <h2>Контакты</h2>
+        <div class="container" data-aos="fade-up">
+            <h2>Оставить заявку</h2>
             <div class="contact-grid">
-                <div class="contact-item"><p>Email</p><a href="mailto:info@example.com">info@example.com</a></div>
-                <div class="contact-item"><p>Телефон</p><a href="tel:+79991234567">+7 (999) 123-45-67</a></div>
-                <div class="contact-item"><p>Telegram</p><a href="#">@lawyer_fio</a></div>
+                <div class="contact-item">
+                    <p>Почта</p>
+                    <a href="mailto:lawyer@volkov.ru">aaaaa@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <p>Телефон</p>
+                    <a href="tel:+79991234567">+7 (999) 123-45-67</a>
+                </div>
+                <div class="contact-item">
+                    <p>Telegram</p>
+                    <a href="https://t.me/volkov">@12234</a>
+                </div>
             </div>
         </div>
     </section>
-
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Ждем полной загрузки DOM, чтобы скрипт точно сработал
-        document.addEventListener('DOMContentLoaded', () => {
+        // Анимация
+        AOS.init({ duration: 1000, once: false, mirror: true });
 
-            AOS.init({ duration: 1000, once: false, mirror: true });
+        // Кнопка наверх
+        const toTop = document.getElementById('toTop');
+        window.onscroll = () => {
+            toTop.style.display = window.scrollY > 500 ? 'block' : 'none';
+        };
+        toTop.onclick = () => window.scrollTo({top: 0, behavior: 'smooth'});
 
+        // УЛУЧШЕННЫЙ СЛАЙДЕР С КНОПКАМИ И ЦЕНТРИРОВАНИЕМ
+        function initSlider(trackId, prevBtnId, nextBtnId) {
+            const track = document.getElementById(trackId);
+            const prevBtn = document.getElementById(prevBtnId);
+            const nextBtn = document.getElementById(nextBtnId);
 
-            /* ОПРЕДЕЛЕНИЕ УСТРОЙСТВА БЕЗ ПИКСЕЛЕЙ
-               Используем matchMedia с 'pointer: coarse'.
-               Это означает "грубый указатель", то есть палец.
-               Это самый надежный способ понять, что перед нами тач-устройство (телефон/планшет),
-               не измеряя ширину экрана в цифрах.
-            */
-            function detectDevice() {
-                // Проверяем, поддерживает ли устройство грубый ввод (палец)
-                const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-                // Также проверяем UserAgent на всякий случай для старых устройств
-                const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            // Клонирование для бесконечности
+            const originalCards = Array.from(track.children);
 
+            // Клонируем 2 раза в обе стороны
+            originalCards.forEach(card => track.appendChild(card.cloneNode(true)));
+            originalCards.forEach(card => track.appendChild(card.cloneNode(true)));
+            originalCards.reverse().forEach(card => track.prepend(card.cloneNode(true)));
+            originalCards.reverse().forEach(card => track.prepend(card.cloneNode(true)));
 
-                if (isTouchDevice || isMobileUA) {
-                    document.body.classList.add('mobile-device');
-                    console.log("Mobile Detected via Pointer/UA");
-                } else {
-                    document.body.classList.add('desktop-device');
-                    console.log("Desktop Detected");
-                }
-            }
-            detectDevice();
+            // Функция обновления фокуса
+            const updateFocus = () => {
+                const center = track.scrollLeft + (track.offsetWidth / 2);
 
-
-            // Меню
-            window.toggleMenu = function() { document.getElementById('navMenu').classList.toggle('show'); }
-            window.closeMenu = function() { document.getElementById('navMenu').classList.remove('show'); }
-
-
-            // Логика бесконечного слайдера
-            function initInfiniteSlider(wrapperId, trackId) {
-                const wrapper = document.getElementById(wrapperId);
-                const track = document.getElementById(trackId);
-                const originalCards = Array.from(track.children);
-                const cardCount = originalCards.length;
-
-
-                if (cardCount === 0) return;
-
-
-                // Клонируем наборы
-                originalCards.forEach(c => track.appendChild(c.cloneNode(true)));
-                originalCards.forEach(c => track.appendChild(c.cloneNode(true)));
-                [...originalCards].reverse().forEach(c => track.prepend(c.cloneNode(true)));
-                [...originalCards].reverse().forEach(c => track.prepend(c.cloneNode(true)));
-
-
-                const updateFocus = () => {
-                    const center = wrapper.scrollLeft + wrapper.offsetWidth / 2;
-                    Array.from(track.children).forEach(card => {
-                        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-                        if (Math.abs(center - cardCenter) < card.offsetWidth / 2) {
-                            card.classList.add('active');
-                        } else {
-                            card.classList.remove('active');
-                        }
-                    });
-                };
-
-
-                const getSingleSetWidth = () => {
-                    const card = track.querySelector('.card');
-                    const style = window.getComputedStyle(card);
-                    const margin = parseFloat(style.marginLeft) + parseFloat(style.marginRight);
-                    return (card.offsetWidth + margin) * cardCount;
-                };
-
-
-                wrapper.addEventListener('scroll', () => {
-                    const setWidth = getSingleSetWidth();
-                    if (wrapper.scrollLeft >= setWidth * 3) {
-                        wrapper.scrollLeft -= setWidth;
-                    } else if (wrapper.scrollLeft <= setWidth) {
-                        wrapper.scrollLeft += setWidth;
+                Array.from(track.children).forEach(card => {
+                    const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+                    if (Math.abs(center - cardCenter) < card.offsetWidth / 2) {
+                        card.classList.add('active');
+                    } else {
+                        card.classList.remove('active');
                     }
-                    updateFocus();
                 });
-
-
-                setTimeout(() => {
-                    const setWidth = getSingleSetWidth();
-                    wrapper.scrollLeft = setWidth * 2;
-                    updateFocus();
-                }, 100);
-            }
-
-
-            window.moveSlider = function(wrapperId, direction) {
-                const wrapper = document.getElementById(wrapperId);
-                const card = wrapper.querySelector('.card');
-                if(card) {
-                    const style = window.getComputedStyle(card);
-                    const margin = parseFloat(style.marginLeft) + parseFloat(style.marginRight);
-                    const scrollAmount = card.offsetWidth + margin;
-                    wrapper.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
-                }
-            }
-
-
-            initInfiniteSlider('priceWrapper', 'priceTrack');
-            initInfiniteSlider('casesWrapper', 'casesTrack');
-
-
-            window.onscroll = () => {
-                const btn = document.getElementById('toTop');
-                if (window.scrollY > 500) btn.style.display = 'block';
-                else btn.style.display = 'none';
             };
-            document.getElementById('toTop').onclick = () => window.scrollTo({top: 0, behavior: 'smooth'});
-        });
+
+            // Начальное позиционирование
+            const cardWidth = 380 + 40;
+            setTimeout(() => {
+                track.scrollLeft = (track.scrollWidth / 2) - (track.offsetWidth / 2);
+                updateFocus();
+            }, 100);
+
+            // Обработчики кнопок
+            nextBtn.addEventListener('click', () => {
+                track.scrollBy({ left: cardWidth, behavior: 'smooth' });
+            });
+
+            prevBtn.addEventListener('click', () => {
+                track.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+            });
+
+            // Бесконечный скролл
+            track.addEventListener('scroll', () => {
+                updateFocus();
+                if (track.scrollLeft < 100) {
+                    track.style.scrollBehavior = 'auto';
+                    track.scrollLeft = track.scrollWidth / 2;
+                    track.style.scrollBehavior = 'smooth';
+                }
+                if (track.scrollLeft > track.scrollWidth - track.offsetWidth - 100) {
+                    track.style.scrollBehavior = 'auto';
+                    track.scrollLeft = track.scrollWidth / 2;
+                    track.style.scrollBehavior = 'smooth';
+                }
+            });
+        }
+
+        initSlider('priceTrack', 'pricePrev', 'priceNext');
+        initSlider('casesTrack', 'casesPrev', 'casesNext');
     </script>
 </body>
 </html>
-
 
 
