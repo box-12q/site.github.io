@@ -253,10 +253,56 @@ h2 { font-size: 2.8rem; text-align: center; margin-bottom: 60px; }
 
 /* МОБИЛЬНАЯ ВЕРСИЯ */
 @media (max-width: 768px) {
-    .about-card { grid-template-columns: 1fr; padding: 30px; }
-    .nav-links { display: none;  }
-    .card { flex: 0 0 280px; }
-    .nav-btn { display: none; }
+    /* Общие отступы стали меньше */
+    section { padding: 60px 0; }
+
+    /* Заголовки уменьшены */
+    h2 { font-size: 1.8rem; margin-bottom: 30px; }
+    h3 { font-size: 1.3rem; }
+
+    /* Hero блок */
+    .hero {
+        height: auto;
+        min-height: 100svh; /* На весь экран, но гибко */
+        padding: 100px 0 60px; /* Отступ сверху для хедера */
+    }
+    .hero h1 { font-size: 2.2rem; }
+    .hero p { font-size: 1rem; padding: 0 10px; }
+    .btn { padding: 15px 30px; width: 100%; max-width: 300px; text-align: center; }
+
+    /* Карточка "Обо мне" */
+    .about-card {
+        grid-template-columns: 1fr; /* Одна колонка */
+        padding: 25px;
+        gap: 30px;
+    }
+
+    /* ИСПРАВЛЕНИЕ ФОТО */
+    .about-img {
+        height: auto; /* Высота авто */
+        max-height: 350px; /* Не слишком высокая */
+        width: 100%;
+        object-position: top center; /* Фокус на верхнюю часть (лицо) */
+        margin-bottom: 10px;
+        box-shadow: 10px 10px 0 var(--primary); /* Тень поменьше */
+    }
+
+    /* Навигация */
+    .nav-links { display: none; } /* Меню скрыто, как и было */
+
+    /* Слайдеры */
     .slider-container-relative { padding: 0; }
+    .nav-btn { display: none; } /* Скрываем стрелки, оставляем свайп */
+
+    .card {
+        flex: 0 0 280px; /* Ширина карточки */
+        padding: 25px;
+        margin: 0 10px;
+    }
+    .price-val { font-size: 1.8rem; }
+
+    /* Контакты */
+    .contact-grid { gap: 30px; }
+    .contact-item a { font-size: 1.2rem; }
 }
 
